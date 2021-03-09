@@ -1,0 +1,60 @@
+michaelt
+333848828
+Michael Titov
+
+
+=============================
+=      File description     =
+=============================
+DirectoryParse - open a source directory and get list of files in it
+
+DirectoryProcessor - get source directory and commands file and print all files in directory according to commands
+
+FilterOrderParse - parse filters and orders in commands file
+
+Section - build section from filter and order
+
+filterFactory - select the needed filter
+
+orderFactory - select the needed order
+
+myfilter/myorder/mysection.exceptions - Exceptions that can happen in Filters/Orders/Section
+
+
+=====================================
+= Design and Implementation details =
+=====================================
+
+Filters
+
+I decided to divide all filters in 3 main types: number, string and property. When they all implement interface
+filter with method isPass. Number filter its have all methods  each subclasses and constructors. Its single choice
+principle, we can extend each class with modification only in one module. Also for string and property filters, they
+have main class and many subclasses with own isPass method.
+allFilter and notFilter are 2 classes that implement interface filter.
+To manage all filters i used Factory principle. In filter Factory we select which filter we want to use/
+
+Orders
+
+Orders where built exactly in the same way like filters but we only have 1 main types that is absOrder and other its
+subclasses, and all implement interface order. Each order have method compare in its own way.
+Also i use principle Factory for select which order i need.
+
+Exceptions
+I decided to have 3 types of exceptions: filter's, order's and section's. When each of them have main abstract class, in
+order to divide them. Also each subclasses have own method getMessage.
+
+Partitions of filters,orders and exceptions it is Decomposability. Each subclass have solution for small his own problem.
+And factory classes composability principle they compose all solutions and we need only to select which solution we need.
+Also continuity principle, if want to add or remove or modificate we only need to do it in small numberof modules/code/
+packages.
+
+So ot manage problems of source directories and files in it, i decided to decompose it to 3 small sub-problems.
+First open source directory and get list of files in it - DirectoryParse.
+Second get filters and orders from argument that i will use - FilterOrderParse.
+Third to divide list of filters and orders in to sections - Section.
+And DirectoryProcessor he compose all solutions that i have.
+
+Data Structure for getting files
+ArrayList in Java is used to store dynamically sized collection of elements. Allow duplicate vallues, also it is ordered
+collection, exactly perfect for us.

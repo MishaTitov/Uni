@@ -1,0 +1,80 @@
+
+
+
+=============================
+=      File description     =
+=============================
+
+CollectionFacadeSet - facade for collections of string acting like set.
+
+SimpleHashSet - an abstract class implementing SimpleSet with some some common methods of Closed/OpenHashSet.
+
+ClosedHashSet - a hash-set based on closed-hashing with quadratic probing.
+
+OpeHashSet -a hash-set based on chaining, using LinkedListHelper instances as chains.
+
+LinkedListHelper - A wrapper-class that has a LinkedList<String> and delegates methods to it.
+
+SimpleSetPerformanceAnalyzer- check five Sets and count their times on various actions.
+
+
+
+================================================
+= Design, Implementation details and Questions =
+================================================
+
+-- OpenHashSet's table --
+For OpenHashSet i just created new wrapper class on base LinkedList, with some default methods of LinkedList.
+Other methods of this class according to API, not something special. Except resize method that we use pollFirst() of
+LinkedListHelper in order to relocate element from old hashtable to new.
+
+-- The deletion mechanism in ClosedHashSet --
+ClosedHashSet delete mechanism:
+I think it more simpler if i will have some special string but if in some case will be the same string also check
+their location on memory, so no string will ever have the NONE memory address.
+
+-- Open/ClosedHashSet's bad results for data1.txt --
+The results of the analysis in depth:
+Open - problem that it add each time in one list of linkedlist and after this adding going to default method of it.
+Closed - problem that it calculate for each word new hash value from start index = 0 when all words have the same hash
+and for each next index also.
+
+-- The strengths and  weakness of each of the data structures --
+
+OpenHashSet/ClosedHashSet - are not great, not terrible. In adding data, searching last element or its not exist is weak
+                            But in other cases not most worst choice for storing data.
+
+TreeSet - Good in searching data all elements(that are not exist, last element, middle element). Not most fast for
+          adding data.
+
+LinkedList - Bad in adding data, searching. Because its going element by element for each method. So if you search
+             one of the first elements its maybe be more quickly than another, but not always.
+
+HashSet - Good in adding data because its build on HashMap's method put(key,value) and LinkedList. Also because of it
+          good in searching data with different elements. But with the elements with same HashCode() its more badly.
+
+-- Difference between 2 implementations --
+
+Differences: How to store data - OpenHashSet have buckets with LinkedList in each bucket.
+                                 ClosedHashSet have only buckets for each element.
+                                 Because of it we can see that in adding data ClosedHashSet better, but sometime in
+                                 searching OpenHashSet is prefer, because of count of collisions of hash code.
+             Calculating Index - OpenHashSet its more simpler. When have collision we use LinkedList.
+                                 ClosedHashSet uses quadratic formula and because of it we calculate index over and
+                                 over again until we don't have collision.
+                                 We can see that some time one method prefer to another or even equal.
+
+-- Difference between my implementations to Java's built in HashSet --
+Java's HashSet its based on HashMap. So each time we create HashSet, HashSet create HashMap with elements are as keys
+and some DEFAULT values. HashSet's add() is exactly HashMap's put(key, value). When put() method works more like
+OpenHashSet, first calculate HashCode of element and index of bucket. And if same index and different name its add him
+to LinkedList in this bucket. When ClosedHashSet works with quadratic hash formula. We can see that insert data1,2 and
+searching in data1 more quicker in data1 where all strings are different. But in data2 my implementations more quicker.
+Maybe the reason its because of the same hash values for positive and negative number. And in my implementations
+calculating better.
+
+-- Java's HashSet's performance --
+How I said HashSet have best performance connected to data1, when data2 with numbers that have the same HashCode it have
+problems. Specially for searching elements. My implementations in this cases more better.
+
+
