@@ -1,2 +1,2 @@
 # Uni
-Implementention of HashMap with Vector in C
+Implementention of generic HashMap with Vector in C
