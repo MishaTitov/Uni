@@ -1,1 +1,1 @@
-implementation of class Matrix and some filters
+implementation of class Matrix and some filters in C
